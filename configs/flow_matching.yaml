@@ -1,0 +1,22 @@
+# Optimal Transport Conditional Flow Matching Configuration
+seed: 42
+model:
+  node_features: 4
+  latent_dim: 64
+  time_embed_dim: 32
+  num_layers: 4
+  sigma_min: 0.001
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  epochs: 50
+  scheduler: "cosine"
+  warmup_epochs: 5
+
+imputation:
+  missing_ratio: 0.35
+  mask_strategy: "subnetwork_dropout"
+  sampling_steps: 50
+  ode_solver: "rk4"

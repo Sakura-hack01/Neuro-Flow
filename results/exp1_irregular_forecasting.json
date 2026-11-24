@@ -1,0 +1,82 @@
+{
+  "experiment": "exp1_irregular_forecasting",
+  "drop_fractions": [
+    0.2,
+    0.4,
+    0.6
+  ],
+  "models": [
+    "GraphNeuralODE",
+    "DiscreteGRU",
+    "GCNDiscrete",
+    "LinearLaplacianDiffusion"
+  ],
+  "metrics_by_drop_rate": {
+    "0.2": {
+      "GraphNeuralODE": {
+        "mse": 1.444002389907837,
+        "crps": 0.6066368818283081,
+        "latency_ms": 75.1493699997809
+      },
+      "DiscreteGRU": {
+        "mse": 0.9073405265808105,
+        "crps": 0.546463131904602,
+        "latency_ms": 8.1714899999497
+      },
+      "GCNDiscrete": {
+        "mse": 12.08950424194336,
+        "crps": 2.6331915855407715,
+        "latency_ms": 2.848980000089796
+      },
+      "LinearLaplacianDiffusion": {
+        "mse": 1.5203709602355957,
+        "crps": 0.5452303290367126,
+        "latency_ms": 0.8579100000133622
+      }
+    },
+    "0.4": {
+      "GraphNeuralODE": {
+        "mse": 1.3751877546310425,
+        "crps": 0.5890819430351257,
+        "latency_ms": 61.53577999994013
+      },
+      "DiscreteGRU": {
+        "mse": 0.8759682774543762,
+        "crps": 0.5363543033599854,
+        "latency_ms": 6.948950000150944
+      },
+      "GCNDiscrete": {
+        "mse": 8.694536209106445,
+        "crps": 2.1501736640930176,
+        "latency_ms": 3.001399999811838
+      },
+      "LinearLaplacianDiffusion": {
+        "mse": 1.427915334701538,
+        "crps": 0.5211361050605774,
+        "latency_ms": 0.8540900002117269
+      }
+    },
+    "0.6": {
+      "GraphNeuralODE": {
+        "mse": 1.3205838203430176,
+        "crps": 0.5531063079833984,
+        "latency_ms": 63.28248000027088
+      },
+      "DiscreteGRU": {
+        "mse": 0.8779520392417908,
+        "crps": 0.5355105400085449,
+        "latency_ms": 4.87991999998485
+      },
+      "GCNDiscrete": {
+        "mse": 6.465262413024902,
+        "crps": 1.7758407592773438,
+        "latency_ms": 2.8914500000610133
+      },
+      "LinearLaplacianDiffusion": {
+        "mse": 1.4208698272705078,
+        "crps": 0.5143486857414246,
+        "latency_ms": 0.8923400000639958
+      }
+    }
+  }
+}

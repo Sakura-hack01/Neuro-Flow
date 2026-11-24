@@ -1,0 +1,23 @@
+{
+  "experiment": "exp3_flow_imputation",
+  "eval_scenarios": {
+    "random_mask_25pct": {
+      "overall_mse": 0.01271500438451767,
+      "missing_channels_mse": 0.04997805133461952,
+      "ci_95_coverage": 0.9882352948188782,
+      "crps": 0.035090990364551544
+    },
+    "random_mask_50pct": {
+      "overall_mse": 0.044689517468214035,
+      "missing_channels_mse": 0.08833973854780197,
+      "ci_95_coverage": 0.9323529601097107,
+      "crps": 0.07791267335414886
+    },
+    "frontoparietal_network_dropout": {
+      "overall_mse": 0.29983770847320557,
+      "missing_channels_mse": 1.1993508338928223,
+      "ci_95_coverage": 0.9106617569923401,
+      "crps": 0.1427358090877533
+    }
+  }
+}

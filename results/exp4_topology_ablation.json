@@ -1,0 +1,23 @@
+{
+  "experiment": "exp4_topology_ablation",
+  "topologies": {
+    "Anatomical_Connectome": {
+      "trajectory_mse": 0.7841095328330994,
+      "kuramoto_sync_r": 0.9804574251174927,
+      "energy_conservation_ratio": 0.45785094211921157,
+      "spectral_drift_l2": 0.10777393728494644
+    },
+    "Erdos_Renyi_Random": {
+      "trajectory_mse": 0.783531129360199,
+      "kuramoto_sync_r": 0.9865379929542542,
+      "energy_conservation_ratio": 0.45107851896508444,
+      "spectral_drift_l2": 0.14384984970092773
+    },
+    "Disconnected_Independent": {
+      "trajectory_mse": 0.6811126470565796,
+      "kuramoto_sync_r": 0.9869831800460815,
+      "energy_conservation_ratio": 0.1306667758290711,
+      "spectral_drift_l2": 0.09793787449598312
+    }
+  }
+}
