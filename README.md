@@ -1,7 +1,7 @@
 # Neural-Flow Connectome
 
 > **Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching**  
-> **Author & Lead Researcher**: Saket Dixit  
+> **Author**: Saket Dixit  
 > **Repository**: [https://github.com/Sakura-hack01/Neuro-Flow](https://github.com/Sakura-hack01/Neuro-Flow)  
 > **Interactive Laboratory**: [https://sakura-hack01.github.io/Neuro-Flow/](https://sakura-hack01.github.io/Neuro-Flow/)
 

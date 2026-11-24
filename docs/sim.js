@@ -223,32 +223,34 @@
     }
   }
 
-  // Draw Astronomical / Laboratory Observatory Grid
+  // Draw Anatomical Hemispheric Outline
   function drawChamberGrid() {
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+    // Subtle anatomical midline
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.06)";
     ctx.lineWidth = 1;
-
-    // Crosshairs
+    ctx.setLineDash([4, 4]);
     ctx.beginPath();
-    ctx.moveTo(cx, 20);
-    ctx.lineTo(cx, height - 20);
-    ctx.moveTo(30, cy);
-    ctx.lineTo(width - 30, cy);
+    ctx.moveTo(cx, 30);
+    ctx.lineTo(cx, height - 30);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Anatomical hemispheric boundary outlines
+    ctx.strokeStyle = "rgba(148, 163, 184, 0.14)";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.ellipse(cx - 135, cy, 118, 175, 0, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Hemispheric boundary guides
     ctx.beginPath();
-    ctx.ellipse(cx - 135, cy, 115, 170, 0, 0, Math.PI * 2);
-    ctx.ellipse(cx + 135, cy, 115, 170, 0, 0, Math.PI * 2);
-    ctx.strokeStyle = "rgba(196, 154, 69, 0.08)";
+    ctx.ellipse(cx + 135, cy, 118, 175, 0, 0, Math.PI * 2);
     ctx.stroke();
 
-    // Subtle scale ticks
-    ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
-    ctx.font = "9px JetBrains Mono, monospace";
-    ctx.fillText("CORONAL -X", cx - 210, cy - 180);
-    ctx.fillText("CORONAL +X", cx + 150, cy - 180);
-    ctx.fillText("SAGITTAL 0.0", cx - 35, 35);
+    // Clean anatomical labels
+    ctx.fillStyle = "rgba(148, 163, 184, 0.45)";
+    ctx.font = "11px Inter, sans-serif";
+    ctx.fillText("Left Hemisphere", cx - 180, 45);
+    ctx.fillText("Right Hemisphere", cx + 90, 45);
   }
 
   // Render Loop
@@ -310,18 +312,18 @@
 
     // Draw mini sparkline graph of R(t) in bottom-right corner
     const sparkW = 180;
-    const sparkH = 50;
-    const sparkX = width - sparkW - 18;
-    const sparkY = height - sparkH - 18;
+    const sparkH = 46;
+    const sparkX = width - sparkW - 16;
+    const sparkY = height - sparkH - 16;
 
-    ctx.fillStyle = "rgba(12, 14, 20, 0.9)";
+    ctx.fillStyle = "rgba(15, 23, 42, 0.9)";
     ctx.fillRect(sparkX, sparkY, sparkW, sparkH);
-    ctx.strokeStyle = "rgba(196, 154, 69, 0.3)";
+    ctx.strokeStyle = "rgba(148, 163, 184, 0.25)";
     ctx.strokeRect(sparkX, sparkY, sparkW, sparkH);
 
-    ctx.fillStyle = "#C49A45";
-    ctx.font = "9px JetBrains Mono, monospace";
-    ctx.fillText("KURAMOTO COHERENCE R(t)", sparkX + 8, sparkY + 13);
+    ctx.fillStyle = "#94A3B8";
+    ctx.font = "9px Inter, sans-serif";
+    ctx.fillText("KURAMOTO ORDER R(t)", sparkX + 8, sparkY + 12);
 
     if (rHistory.length > 1) {
       ctx.beginPath();

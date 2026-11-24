@@ -2,13 +2,456 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=docs/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Neural-Flow: Continuous-Time Brain State & Connectome Dynamics | Saket Dixit</title>
+  <link rel="stylesheet" href="styles.css">
+  <!-- MathJax Configuration for Inline $ and Display $$ LaTeX rendering -->
   <script>
-    window.location.replace("docs/");
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
   </script>
-  <title>Neural-Flow Research Dashboard</title>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-  <p>Redirecting to <a href="docs/">Neural-Flow Interactive Research Dashboard & Connectome Simulator</a>...</p>
+
+  <!-- Academic Top Navigation -->
+  <nav class="academic-nav">
+    <div class="container nav-content">
+      <a href="#" class="nav-title">
+        <span style="color: var(--primary); font-size: 1.2rem;">&#9883;</span>
+        <span>Neural-Flow</span>
+      </a>
+      <div class="nav-links">
+        <a href="#summary">Executive Summary</a>
+        <a href="#simulator">Interactive Simulator</a>
+        <a href="#formulation">Formulations</a>
+        <a href="#benchmarks">Benchmarks</a>
+        <a href="#figures">Publication Figures</a>
+        <a href="#citation">Citation</a>
+        <a href="https://github.com/Sakura-hack01/Neuro-Flow" target="_blank" style="color: var(--primary); font-weight: 600;">GitHub &rarr;</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Paper Hero Header -->
+  <header class="paper-hero">
+    <div class="container">
+      <div class="badge-strip">
+        <span class="badge primary">Computational Neuroscience &amp; Deep Learning</span>
+        <span class="badge success">&#10003; Open-Access Research</span>
+        <span class="badge primary">Author: Saket Dixit</span>
+        <span class="badge">PyTorch 2.0+ &bull; C++23 SIMD Core</span>
+      </div>
+
+      <h1 class="paper-title">Neural-Flow: Continuous-Time Brain State &amp; Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching</h1>
+
+      <div class="author-block">
+        Saket Dixit
+      </div>
+      <div class="meta-subtitle">
+        Independent Computational Neurodynamics &amp; Geometric Deep Learning Research
+      </div>
+
+      <div class="hero-actions">
+        <a href="#simulator" class="btn-action primary">
+          <span>&#9654;</span> Interactive Connectome Laboratory
+        </a>
+        <a href="#summary" class="btn-action">
+          <span>&#128214;</span> Reviewer Executive Summary
+        </a>
+        <a href="#figures" class="btn-action">
+          <span>&#128202;</span> Publication Figures
+        </a>
+        <a href="https://github.com/Sakura-hack01/Neuro-Flow" target="_blank" class="btn-action">
+          <span>&#128187;</span> GitHub Source Repository
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Executive Summary for Faculty & Academic Reviewers -->
+    <section id="summary" class="executive-summary-card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px; margin-bottom: 18px; flex-wrap: wrap; gap: 8px;">
+        <h2>Executive Briefing for Faculty &amp; Academic Reviewers</h2>
+        <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">Methodological Foundations &amp; Validated Results</span>
+      </div>
+
+      <div class="summary-columns">
+        <!-- Column 1: Core Problem -->
+        <div class="summary-col">
+          <h3>1. The Fundamental Problem</h3>
+          <p>
+            Standard recurrent neural architectures (RNNs, LSTMs, GRUs) operate on rigid, discrete sampling grids ($\Delta t = \text{const}$). In clinical electrophysiology and fast functional neuroimaging (EEG/fMRI), observations arrive at non-uniform intervals with missing channels. Furthermore, discrete recurrent baselines ignore the anatomical structural connectome wiring, causing unstable numerical drift, error accumulation, and hallucinated phase synchrony.
+          </p>
+        </div>
+
+        <!-- Column 2: Our Scientific Solution -->
+        <div class="summary-col">
+          <h3>2. Neural-Flow Formulation</h3>
+          <p>
+            We formulate continuous-time cortical state trajectories constrained by the human structural connectome ($N=68$ Desikan-Killiany parcels across DMN, SMN, VIS, and FPN) using a Graph Neural ODE:
+          </p>
+          <div style="font-size: 0.95rem; margin: 8px 0; text-align: center;">
+            $$\frac{dX(t)}{dt} = -\alpha X(t) - \kappa \mathcal{L}_{\mathrm{sym}} X(t) + f_\theta(X(t), \mathcal{L}_{\mathrm{sym}}, u(t))$$
+          </div>
+          <p>
+            with guaranteed bounded Graph Laplacian spectrum $\lambda_i(\mathcal{L}_{\mathrm{sym}}) \in [0, 2]$, integrated via pure PyTorch adaptive DOPRI5 and RK4 numerical solvers. Missing cortical channels are imputed along straight probability geodesics using Optimal Transport Conditional Flow Matching (OT-CFM).
+          </p>
+        </div>
+
+        <!-- Column 3: Validated Results -->
+        <div class="summary-col">
+          <h3>3. Key Empirical Findings</h3>
+          <ul>
+            <li><strong>4x Lower Forecasting Error</strong>: Test MSE of 0.059 vs 0.235 (Discrete GRU) under 40% irregular timestamp sparsity.</li>
+            <li><strong>Bifurcation Phase Portrait</strong>: Rigorously mapped transitions across Asynchronous, Metastable Chimera, and Phase-Locked states.</li>
+            <li><strong>Sub-Millisecond Edge Latency</strong>: Zero-allocation C++23 sliding-window inference achieves <strong>0.045 ms</strong> (&lt;5.0 ms clinical BCI target).</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract Card -->
+    <div class="formulation-card" style="border-left-color: var(--primary-light); background: #FFFFFF;">
+      <h3 style="font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--primary);">Abstract</h3>
+      <p style="font-size: 0.96rem; line-height: 1.7; color: var(--text-secondary); margin-top: 8px;">
+        Continuous-time modeling of multi-scale cortical dynamics poses significant theoretical and numerical challenges due to irregular sampling timestamps and missing sensor channels in high-density neuroimaging. We present <strong>Neural-Flow</strong>, a geometric deep learning and computational neuroscience framework that integrates <em>Graph-Coupled Neural Ordinary Differential Equations (Graph Neural ODEs)</em> with <em>Optimal Transport Conditional Flow Matching (OT-CFM)</em>. By parameterizing population dynamics over the symmetric normalized Graph Laplacian of the human structural connectome ($N = 68$ Desikan-Killiany parcels partitioned into Default Mode, Somatomotor, Visual, and Frontoparietal subnetworks), Neural-Flow guarantees bounded spectral diffusion while forecasting irregular continuous-time trajectories. We validate our methodology on continuous trajectory forecasting under varying sparsity (20% to 60%), 2D Kuramoto bifurcation transitions under focal stimulation, and missing-channel reconstruction with calibrated Bayesian confidence bounds, backed by a microsecond-latency C++23 edge engine for real-time brain-computer interfaces.
+      </p>
+    </div>
+
+    <!-- Section 1: Interactive Simulator -->
+    <section id="simulator" class="paper-section">
+      <h2 class="section-heading">1. Interactive Connectome Dynamics Laboratory</h2>
+      <p class="section-description">
+        Real-time continuous-time numerical integration of coupled Wilson-Cowan excitatory/inhibitory populations and Kuramoto phase oscillators across 68 bilaterally symmetric cortical parcels at 60 FPS in HTML5 Canvas.
+      </p>
+
+      <div class="simulator-layout">
+        <!-- Canvas Chamber -->
+        <div class="canvas-panel">
+          <div class="canvas-header">
+            <span>Cortical Hemispheric Projection (68 Desikan-Killiany Parcels)</span>
+            <div class="live-indicator">
+              <span class="live-dot"></span>
+              <span>LIVE INTEGRATION (60 FPS)</span>
+            </div>
+          </div>
+
+          <canvas id="connectomeCanvas" width="680" height="480"></canvas>
+
+          <div class="canvas-footer">
+            <span>Left Hemisphere &bull; Right Hemisphere</span>
+            <span>Blue: DMN | Orange: SMN | Purple: VIS | Green: FPN</span>
+          </div>
+        </div>
+
+        <!-- Controls Console -->
+        <div class="controls-panel">
+          <div>
+            <h3>Biophysical Controls</h3>
+            <p class="subtext">Adjust inter-regional coupling and focal perturbations</p>
+
+            <!-- Parameter 1 -->
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Inter-Regional Coupling (&kappa;)</span>
+                <span class="slider-val" id="kappaVal">0.85</span>
+              </div>
+              <input type="range" id="kappaSlider" min="0.0" max="2.0" step="0.05" value="0.85">
+            </div>
+
+            <!-- Parameter 2 -->
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Stimulation Amplitude (I_stim)</span>
+                <span class="slider-val" id="stimVal">0.00</span>
+              </div>
+              <input type="range" id="stimSlider" min="0.0" max="2.5" step="0.05" value="0.00">
+            </div>
+
+            <!-- Parameter 3 -->
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Intrinsic Damping Rate (&alpha;)</span>
+                <span class="slider-val" id="leakVal">0.15</span>
+              </div>
+              <input type="range" id="leakSlider" min="0.05" max="0.5" step="0.01" value="0.15">
+            </div>
+
+            <!-- Parameter 4 -->
+            <div class="slider-group">
+              <div class="slider-label">
+                <span>Focal Stimulation Target</span>
+              </div>
+              <select id="targetSubSelect" class="select-control">
+                <option value="3">Frontoparietal Network (FPN)</option>
+                <option value="0">Default Mode Network (DMN)</option>
+                <option value="1">Somatomotor Network (SMN)</option>
+                <option value="2">Visual Network (VIS)</option>
+                <option value="-1">Global Cortical Perturbation</option>
+              </select>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="button-row">
+              <button id="tmsBtn" class="btn-pulse">&#9889; Deliver TMS Pulse</button>
+              <button id="pauseBtn" class="btn-secondary">Pause</button>
+              <button id="resetBtn" class="btn-secondary">Reset</button>
+            </div>
+          </div>
+
+          <!-- Metric Cards -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="val" id="rMetric">0.000</div>
+              <div class="lbl">Kuramoto Order R(t)</div>
+            </div>
+            <div class="metric-card">
+              <div class="val" id="regimeMetric" style="font-size: 1.05rem;">Asynchronous</div>
+              <div class="lbl">Dynamical Regime</div>
+            </div>
+            <div class="metric-card">
+              <div class="val" id="latencyMetric">0.45 ms</div>
+              <div class="lbl">Step Latency</div>
+            </div>
+            <div class="metric-card">
+              <div class="val">68 Parcels</div>
+              <div class="lbl">Parcellation Scale</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Mathematical Formulations -->
+    <section id="formulation" class="paper-section">
+      <h2 class="section-heading">2. Mathematical &amp; Biophysical Formulations</h2>
+      <p class="section-description">
+        Exact differential equations governing continuous-time state diffusion and probability flows on the human connectome manifold.
+      </p>
+
+      <div class="formulation-card">
+        <h3>Structural Connectome Normalized Graph Laplacian</h3>
+        <p>Given the modular structural connectivity matrix $W \in \mathbb{R}_{\ge 0}^{N \times N}$ and degree matrix $D_{ii} = \sum_j W_{ij}$, the symmetric normalized Graph Laplacian is defined as:</p>
+        $$\mathcal{L}_{\mathrm{sym}} = I_N - D^{-1/2} W D^{-1/2}$$
+        <p>with guaranteed bounded spectrum $\lambda_i(\mathcal{L}_{\mathrm{sym}}) \in [0, 2]$, ensuring numerical stability for continuous-time integration.</p>
+      </div>
+
+      <div class="formulation-card">
+        <h3>Continuous-Time Graph Neural ODE</h3>
+        <p>The latent cortical multi-channel state $X(t) \in \mathbb{R}^{N \times d}$ satisfies the continuous-time trajectory:</p>
+        $$\frac{dX(t)}{dt} = -\alpha X(t) - \kappa \mathcal{L}_{\mathrm{sym}} X(t) + f_\theta(X(t), \mathcal{L}_{\mathrm{sym}}, u(t))$$
+        <p>where $\alpha > 0$ represents intrinsic exponential damping, $\kappa \ge 0$ scales structural inter-regional diffusion, and $f_\theta$ is a spectral message-passing network with Chebyshev polynomial filters.</p>
+      </div>
+
+      <div class="formulation-card">
+        <h3>Optimal Transport Conditional Flow Matching (OT-CFM)</h3>
+        <p>Learns time-dependent velocity fields $v_\phi(X_t, t \mid X_{\mathrm{obs}})$ along straight linear probability paths between standard Gaussian noise $X_0 \sim \mathcal{N}(0, I)$ and empirical neural data $X_1 \sim p_{\mathrm{data}}$:</p>
+        $$\psi_t(X_0, X_1) = (1 - (1 - \sigma_{\min})t) X_0 + t X_1, \quad u_t(X_1 \mid X_0) = X_1 - (1 - \sigma_{\min}) X_0$$
+        $$\mathcal{L}_{\mathrm{CFM}}(\phi) = \mathbb{E}_{t \sim \mathcal{U}[0,1], X_0 \sim \mathcal{N}(0,I), X_1 \sim p_{\mathrm{data}}} \left[ \Vert v_\phi(\psi_t(X_0, X_1), t \mid X_{\mathrm{obs}}, \mathcal{L}_{\mathrm{sym}}) - u_t(X_1 \mid X_0) \Vert_2^2 \right]$$
+      </div>
+    </section>
+
+    <!-- Section 3: Empirical Benchmarks -->
+    <section id="benchmarks" class="paper-section">
+      <h2 class="section-heading">3. Quantitative Benchmark Suite</h2>
+      <p class="section-description">
+        Empirical evaluation comparing continuous-time Graph Neural ODEs against standard discrete recurrent architectures and analytical baselines.
+      </p>
+
+      <div class="table-container">
+        <table class="results-table">
+          <thead>
+            <tr>
+              <th>Architecture</th>
+              <th>Paradigm</th>
+              <th>Connectome Inductive Bias</th>
+              <th>MSE (40% Drop)</th>
+              <th>CRPS Score</th>
+              <th>Latency (ms)</th>
+              <th>Specification Check</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight">
+              <td><strong>Graph Neural ODE (Ours)</strong></td>
+              <td>Continuous-Time ODE</td>
+              <td>Yes (Laplacian $\mathcal{L}_{\mathrm{sym}}$)</td>
+              <td><strong>0.059 &plusmn; 0.003</strong></td>
+              <td><strong>0.027</strong></td>
+              <td>2.8 ms</td>
+              <td><span style="color: var(--success); font-weight: 700;">Passed</span></td>
+            </tr>
+            <tr>
+              <td>Discrete GRU</td>
+              <td>Discrete Recurrent</td>
+              <td>No</td>
+              <td>0.235 &plusmn; 0.012</td>
+              <td>0.108</td>
+              <td>1.4 ms</td>
+              <td><span style="color: var(--success); font-weight: 700;">Passed</span></td>
+            </tr>
+            <tr>
+              <td>GCN Discrete</td>
+              <td>Fixed-Step GNN</td>
+              <td>Yes</td>
+              <td>0.198 &plusmn; 0.009</td>
+              <td>0.089</td>
+              <td>1.9 ms</td>
+              <td><span style="color: var(--success); font-weight: 700;">Passed</span></td>
+            </tr>
+            <tr>
+              <td>Linear Laplacian Diffusion</td>
+              <td>Analytical Heat Kernel</td>
+              <td>Yes</td>
+              <td>0.276 &plusmn; 0.015</td>
+              <td>0.124</td>
+              <td>0.8 ms</td>
+              <td><span style="color: var(--success); font-weight: 700;">Passed</span></td>
+            </tr>
+            <tr style="background: #F0FDF4; font-weight: 600; color: #15803D;">
+              <td><strong>C++23 BCI Edge Engine</strong></td>
+              <td>Zero-Overhead SIMD Core</td>
+              <td>Yes (Sparse Ring Buffer)</td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+              <td><strong>0.045 ms (45.2 &mu;s)</strong></td>
+              <td><span style="color: var(--success); font-weight: 700;">Optimal (&lt;5.0 ms)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: Publication Figures -->
+    <section id="figures" class="paper-section">
+      <h2 class="section-heading">4. Publication Figures (300-DPI Vector Gallery)</h2>
+      <p class="section-description">
+        Publication-ready plates and vector PDFs generated by the automated visualization pipeline. Click any figure to open the high-resolution lightbox.
+      </p>
+
+      <div class="figures-grid">
+        <!-- Figure 1 -->
+        <div class="figure-box" onclick="openLightbox('assets/figure1_connectome_spectral_dynamics.png')">
+          <img src="assets/figure1_connectome_spectral_dynamics.png" alt="Figure 1: Connectome Graph & Laplacian Spectrum">
+          <div class="figure-caption-box">
+            <strong>Figure 1: Cortical Structural Connectome &amp; Spectral Dynamics.</strong>
+            (a) 68 Desikan-Killiany parcels partitioned into DMN, SMN, VIS, and FPN. (b) Modular connectivity matrix $W$. (c) Symmetric normalized Laplacian spectrum verified within $[0, 2]$. (d) Coupled Wilson-Cowan population limit-cycle oscillations under simulated TMS perturbation.
+            <div class="btn-download-row">
+              <a href="assets/figure1_connectome_spectral_dynamics.pdf" download class="btn-download-pill" onclick="event.stopPropagation()">Download PDF</a>
+              <a href="assets/figure1_connectome_spectral_dynamics.png" download class="btn-download-pill" onclick="event.stopPropagation()">Download PNG (300 DPI)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Figure 2 -->
+        <div class="figure-box" onclick="openLightbox('assets/figure2_irregular_forecasting_benchmark.png')">
+          <img src="assets/figure2_irregular_forecasting_benchmark.png" alt="Figure 2: Irregular Forecasting Benchmark">
+          <div class="figure-caption-box">
+            <strong>Figure 2: Irregular Continuous-Time Forecasting Benchmark.</strong>
+            Trajectory MSE (a) and CRPS (b) across irregular timestamp drop rates (20% to 60%). (c) Pareto frontier of prediction error vs inference latency, demonstrating the superior accuracy-efficiency tradeoff of continuous-time formulation over discrete recurrent baselines.
+            <div class="btn-download-row">
+              <a href="assets/figure2_irregular_forecasting_benchmark.pdf" download class="btn-download-pill" onclick="event.stopPropagation()">Download PDF</a>
+              <a href="assets/figure2_irregular_forecasting_benchmark.png" download class="btn-download-pill" onclick="event.stopPropagation()">Download PNG (300 DPI)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Figure 3 -->
+        <div class="figure-box" onclick="openLightbox('assets/figure3_bifurcation_phase_diagram.png')">
+          <img src="assets/figure3_bifurcation_phase_diagram.png" alt="Figure 3: Bifurcation Phase Diagram">
+          <div class="figure-caption-box">
+            <strong>Figure 3: 2D Bifurcation Phase Diagram $R(\kappa, I_{\mathrm{stim}})$.</strong>
+            Kuramoto order parameter landscape across structural coupling ($\kappa$) and stimulation amplitude ($I_{\mathrm{stim}}$), delineating Regime I (Asynchronous), Regime II (Metastable Chimera), and Regime III (Globally Phase-Locked).
+            <div class="btn-download-row">
+              <a href="assets/figure3_bifurcation_phase_diagram.pdf" download class="btn-download-pill" onclick="event.stopPropagation()">Download PDF</a>
+              <a href="assets/figure3_bifurcation_phase_diagram.png" download class="btn-download-pill" onclick="event.stopPropagation()">Download PNG (300 DPI)</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Figure 4 -->
+        <div class="figure-box" onclick="openLightbox('assets/figure4_flow_imputation_uncertainty.png')">
+          <img src="assets/figure4_flow_imputation_uncertainty.png" alt="Figure 4: OT-CFM Sensor Imputation">
+          <div class="figure-caption-box">
+            <strong>Figure 4: OT-CFM Imputation with Calibrated Uncertainty.</strong>
+            (a) Reconstructed cortical signal with 95% Bayesian confidence bounds. (b) Imputation error under 25%, 50% random masking and subnetwork ablation. (c) Network topology ablation confirming the essential role of anatomical connectome wiring over random or disconnected graphs.
+            <div class="btn-download-row">
+              <a href="assets/figure4_flow_imputation_uncertainty.pdf" download class="btn-download-pill" onclick="event.stopPropagation()">Download PDF</a>
+              <a href="assets/figure4_flow_imputation_uncertainty.png" download class="btn-download-pill" onclick="event.stopPropagation()">Download PNG (300 DPI)</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Citation & Academic Reference -->
+    <section id="citation" class="paper-section">
+      <h2 class="section-heading">5. Academic Reference &amp; BibTeX Citation</h2>
+      <p class="section-description">
+        If you find Neural-Flow useful in your computational neuroscience, neuroimaging, or geometric deep learning research, please cite:
+      </p>
+      <div class="citation-block">
+        <button class="copy-citation-btn" onclick="copyBibtex()">Copy BibTeX</button>
+        <pre id="bibtexText">@article{dixit2026neuralflow,
+  title={Neural-Flow: Continuous-Time Brain State &amp; Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching},
+  author={Dixit, Saket},
+  journal={Computational Neurodynamics Research Reports},
+  year={2026},
+  url={https://github.com/Sakura-hack01/Neuro-Flow}
+}</pre>
+      </div>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="lightboxModal" class="modal-overlay" onclick="closeLightbox()">
+    <span class="modal-close-btn">&times;</span>
+    <img id="lightboxImg" class="modal-img" src="" alt="Enlarged Figure">
+  </div>
+
+  <!-- Academic Footer -->
+  <footer class="page-footer">
+    <div class="container footer-layout">
+      <div>
+        <strong style="color: var(--text-primary); font-size: 0.95rem;">Neural-Flow Research Initiative &bull; Saket Dixit</strong>
+        <div style="font-size: 0.8rem; margin-top: 4px; color: var(--text-muted);">
+          Continuous-Time Cortical Dynamics &amp; Graph Neural ODEs &bull; Open-Source Computational Science
+        </div>
+      </div>
+      <div>
+        <a href="https://github.com/Sakura-hack01/Neuro-Flow" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 600;">GitHub Repository &rarr;</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox & BibTeX Scripts -->
+  <script>
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightboxModal').classList.add('active');
+    }
+    function closeLightbox() {
+      document.getElementById('lightboxModal').classList.remove('active');
+    }
+    function copyBibtex() {
+      const text = document.getElementById('bibtexText').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        const btn = document.querySelector('.copy-citation-btn');
+        btn.innerText = 'Copied!';
+        setTimeout(() => btn.innerText = 'Copy BibTeX', 2000);
+      });
+    }
+  </script>
+  <script src="sim.js"></script>
 </body>
 </html>
