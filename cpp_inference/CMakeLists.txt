@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Optimization flags for publication-grade low latency (<5ms target)
+# Optimization flags for microsecond-scale low latency (<5ms target)
 if(MSVC)
     add_compile_options(/O2 /arch:AVX2 /W4)
 else()

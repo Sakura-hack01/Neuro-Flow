@@ -1,1 +1,1 @@
-"""Publication-grade visualization and figure generation suite."""
+"""High-resolution visualization and figure generation suite."""

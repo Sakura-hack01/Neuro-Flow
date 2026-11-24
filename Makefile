@@ -6,7 +6,7 @@ help:
 	@echo "Neural-Flow Connectome Makefile Targets:"
 	@echo "  make test         - Run automated PyTest test suite"
 	@echo "  make experiments  - Execute all scientific experiment suites"
-	@echo "  make plot         - Generate publication-grade 300-DPI figures"
+	@echo "  make plot         - Generate 300-DPI high-resolution research figures"
 	@echo "  make cpp-bench    - Run real-time BCI edge engine latency benchmark"
 	@echo "  make pages        - Prepare and verify GitHub Pages static docs"
 	@echo "  make all          - Execute full pipeline: test, experiments, plot, cpp-bench"

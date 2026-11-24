@@ -1,7 +1,7 @@
 # Neural-Flow Connectome
 
 > **Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching**  
-> **Author**: Saket Dixit  
+> **Author & Lead Researcher**: Saket Dixit  
 > **Repository**: [https://github.com/Sakura-hack01/Neuro-Flow](https://github.com/Sakura-hack01/Neuro-Flow)  
 > **Interactive Laboratory**: [https://sakura-hack01.github.io/Neuro-Flow/](https://sakura-hack01.github.io/Neuro-Flow/)
 
@@ -37,7 +37,7 @@ neural-flow-connectome/
 │   └── run_bci_benchmark.py           # Benchmark runner and metrics exporter
 ├── docs/                              # GitHub Pages static dashboard
 │   ├── index.html                     # Interactive research presentation
-│   ├── styles.css                     # Publication styling
+│   ├── styles.css                     # Academic portal styling
 │   ├── sim.js                         # 60 FPS HTML5 canvas simulator
 │   └── assets/                        # 300-DPI high-resolution figures
 ├── experiments/
@@ -45,7 +45,7 @@ neural-flow-connectome/
 │   ├── exp2_bifurcation_phase_diagram.py # 2D Kuramoto bifurcation sweep
 │   ├── exp3_flow_imputation.py        # OT-CFM missing channel reconstruction
 │   └── exp4_topology_ablation.py      # Connectome vs random graph ablation
-├── figures/                           # 300-DPI publication plots (PNG and PDF)
+├── figures/                           # 300-DPI research figures (PNG and PDF)
 ├── notebooks/
 │   └── Neural_Flow_Interactive_Demo.ipynb # Interactive tutorial notebook
 ├── results/                           # JSON and checkpoint outputs
@@ -88,7 +88,7 @@ python -m src.cli test
 # Run all scientific experiments
 python -m src.cli exp
 
-# Generate publication-grade 300-DPI figures
+# Generate high-resolution 300-DPI research figures
 python -m src.cli plot
 
 # Execute BCI edge engine benchmark
