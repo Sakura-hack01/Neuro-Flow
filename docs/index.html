@@ -3,23 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neural-Flow: Continuous-Time Brain State & Connectome Dynamics | Saket Dixit</title>
+  <title>Neural-Flow: Continuous-Time Brain State & Connectome Dynamics</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- MathJax for high-resolution LaTeX rendering -->
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <!-- MathJax Configuration for LaTeX rendering -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    };
+  </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
-  <!-- Academic Top Brand Bar -->
+  <!-- Top Brand Bar -->
   <div class="univ-top-bar">
     <div class="container">
       <div class="univ-crest-title">
         <span class="univ-crest-symbol">&#9883;</span>
         <span>Neural-Flow &bull; Continuous-Time Cortical Dynamics</span>
-      </div>
-      <div class="univ-dept-badge">
-        Lead Researcher: Saket Dixit
       </div>
     </div>
   </div>
@@ -27,21 +35,7 @@
   <!-- Hero Header -->
   <header class="hero-header">
     <div class="container">
-      <div class="research-badge-row">
-        <span class="peer-badge">Computational Neuroscience & Machine Learning</span>
-        <span class="open-access-pill">&#10003; Open-Access Codebase</span>
-        <span class="peer-badge" style="color: var(--gold-accent); border-color: var(--border-gold); background: #FAF6ED;">Author: Saket Dixit</span>
-        <span class="peer-badge">PyTorch 2.0+ &bull; C++23 Core</span>
-      </div>
-
       <h1 class="paper-title">Neural-Flow: Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching</h1>
-
-      <div class="author-line">
-        Researched & Developed by <strong>Saket Dixit</strong>
-      </div>
-      <div class="affiliation-line">
-        Independent Computational Neurodynamics Research Initiative &bull; Connectome AI Project
-      </div>
 
       <div class="action-links">
         <a href="#simulator" class="action-btn primary">
@@ -67,16 +61,16 @@
     <!-- Executive Summary for Professors & Academic Reviewers -->
     <section id="executive-summary" style="padding-top: 36px; padding-bottom: 24px;">
       <div style="background: #FFFFFF; border: 1px solid var(--border-gold); border-top: 4px solid var(--crimson-primary); border-radius: 8px; padding: 32px 36px; box-shadow: var(--shadow-card);">
-        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 12px; flex-wrap: wrap;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 12px; flex-wrap: wrap; gap: 8px;">
           <h2 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--crimson-dark); letter-spacing: 0.06em; text-transform: uppercase;">
             Executive Summary for Faculty & Academic Reviewers
           </h2>
           <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-muted);">Key Highlights & Experimental Validation</span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 18px;">
+        <div class="exec-summary-grid">
           <!-- Column 1: Core Problem -->
-          <div>
+          <div class="exec-col">
             <h4 style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; color: var(--crimson-primary); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.04em;">
               1. The Fundamental Problem
             </h4>
@@ -86,19 +80,23 @@
           </div>
 
           <!-- Column 2: Our Scientific Solution -->
-          <div>
+          <div class="exec-col">
             <h4 style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; color: var(--crimson-primary); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.04em;">
               2. Methodology: Neural-Flow
             </h4>
             <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
               We formulate continuous-time cortical dynamics on the human connectome ($N=68$ Desikan-Killiany regions across 4 subnetworks) using a Graph Neural ODE:
-              $$\frac{dX(t)}{dt} = -\alpha X(t) - \kappa \mathcal{L}_{\mathrm{sym}} X(t) + f_\theta(X(t), \mathcal{L}_{\mathrm{sym}}, u(t))$$
+            </p>
+            <div class="exec-math-box">
+              $$\frac{dX}{dt} = -\alpha X - \kappa \mathcal{L}_{\mathrm{sym}} X + f_\theta(X, \mathcal{L}_{\mathrm{sym}}, u)$$
+            </div>
+            <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
               with verified spectral bounds $\lambda_i(\mathcal{L}_{\mathrm{sym}}) \in [0, 2]$, integrated via pure PyTorch adaptive DOPRI5/RK4 solvers. Missing channels are reconstructed via Optimal Transport Conditional Flow Matching (OT-CFM).
             </p>
           </div>
 
           <!-- Column 3: Validated Results -->
-          <div>
+          <div class="exec-col">
             <h4 style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; color: var(--crimson-primary); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.04em;">
               3. Empirical Validation
             </h4>

@@ -217,6 +217,52 @@ h1.paper-title {
   color: #FFFFFF;
 }
 
+/* Executive Summary Grid & Cards */
+.exec-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  margin-top: 18px;
+}
+
+@media (max-width: 960px) {
+  .exec-summary-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.exec-col {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.exec-math-box {
+  overflow-x: auto;
+  overflow-y: hidden;
+  max-width: 100%;
+  padding: 8px 12px;
+  background: #FAF8F5;
+  border-radius: 6px;
+  border: 1px solid var(--border-light);
+  margin: 10px 0;
+  text-align: center;
+}
+
+.exec-math-box mjx-container,
+.exec-math-box .MathJax {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+/* MathJax Global Containment */
+mjx-container, .MathJax, .MathJax_Display {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
 /* Abstract Callout */
 .abstract-panel {
   background: var(--surface-white);
@@ -512,6 +558,7 @@ button.btn-util:hover {
   margin-bottom: 24px;
   box-shadow: var(--shadow-subtle);
   position: relative;
+  overflow-x: auto;
 }
 
 .math-card::before {
@@ -580,7 +627,7 @@ table.academic-table tr:hover:not(.highlight-row) {
 /* Experimental Analysis Figures Gallery */
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 28px;
   margin-top: 28px;
 }
@@ -601,6 +648,7 @@ table.academic-table tr:hover:not(.highlight-row) {
   cursor: pointer;
   display: flex;
   flex-direction: column;
+  min-width: 0;
 }
 
 .gallery-card:hover {
@@ -611,6 +659,7 @@ table.academic-table tr:hover:not(.highlight-row) {
 
 .gallery-card img {
   width: 100%;
+  max-width: 100%;
   height: auto;
   display: block;
   border-bottom: 1px solid var(--border-light);
@@ -636,6 +685,7 @@ table.academic-table tr:hover:not(.highlight-row) {
   display: flex;
   gap: 8px;
   margin-top: 10px;
+  flex-wrap: wrap;
 }
 
 .download-pill {
