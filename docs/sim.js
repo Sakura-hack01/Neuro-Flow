@@ -1,6 +1,7 @@
 /**
  * Real-time Client-side Neural Connectome & Continuous-Time ODE Simulator.
  * Simulates 68 Desikan-Killiany cortical parcels and Kuramoto/Wilson-Cowan dynamics at 60 FPS.
+ * Harvard Center for Brain Science Observatory Design.
  */
 
 (function () {
@@ -25,12 +26,12 @@
   const regimeMetricEl = document.getElementById("regimeMetric");
   const latencyMetricEl = document.getElementById("latencyMetric");
 
-  // Subnetworks definition
+  // Subnetworks definition (Harvard Laboratory Palette)
   const SUBNETWORKS = [
-    { name: "Default Mode", color: "#3182ce", start: 0, end: 17 },
-    { name: "Somatomotor", color: "#dd6b20", start: 17, end: 34 },
-    { name: "Visual", color: "#805ad5", start: 34, end: 51 },
-    { name: "Frontoparietal", color: "#319795", start: 51, end: 68 },
+    { name: "Default Mode", color: "#3B82F6", start: 0, end: 17 },
+    { name: "Somatomotor", color: "#F59E0B", start: 17, end: 34 },
+    { name: "Visual", color: "#A855F7", start: 34, end: 51 },
+    { name: "Frontoparietal", color: "#10B981", start: 51, end: 68 },
   ];
 
   // Parameters
@@ -55,14 +56,14 @@
     const subIdx = Math.min(Math.floor(i / 17), 3);
     const sub = SUBNETWORKS[subIdx];
 
-    const hemisphereOffset = isLeft ? -130 : 130;
+    const hemisphereOffset = isLeft ? -135 : 135;
     const localIdx = isLeft ? i : i - NUM_NODES / 2;
     const angle = (localIdx / (NUM_NODES / 2)) * Math.PI * 2;
-    const rx = 85 + (localIdx % 3) * 15;
-    const ry = 140 + (localIdx % 4) * 10;
+    const rx = 90 + (localIdx % 3) * 16;
+    const ry = 145 + (localIdx % 4) * 12;
 
-    const x = cx + hemisphereOffset + Math.cos(angle) * rx + (Math.random() - 0.5) * 8;
-    const y = cy + Math.sin(angle) * ry + (Math.random() - 0.5) * 8;
+    const x = cx + hemisphereOffset + Math.cos(angle) * rx + (Math.random() - 0.5) * 6;
+    const y = cy + Math.sin(angle) * ry + (Math.random() - 0.5) * 6;
 
     nodes.push({
       id: i,
@@ -71,7 +72,7 @@
       subnetwork: subIdx,
       color: sub.color,
       phase: Math.random() * Math.PI * 2,
-      omega: 1.0 + (Math.random() - 0.5) * 0.4, // Intrinsic frequency
+      omega: 1.0 + (Math.random() - 0.5) * 0.4,
       activity: 0.2 + Math.random() * 0.2,
       dxdt: 0.0,
     });
@@ -90,15 +91,15 @@
       const dy = nodes[i].y - nodes[j].y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       const sameSub = nodes[i].subnetwork === nodes[j].subnetwork;
-      const modularFactor = sameSub ? 1.8 : 0.35;
-      const weight = Math.exp(-0.015 * dist) * modularFactor;
+      const modularFactor = sameSub ? 1.85 : 0.35;
+      const weight = Math.exp(-0.014 * dist) * modularFactor;
       adj[i][j] = weight > 0.22 ? weight : 0;
     }
   }
 
   // R(t) rolling history for mini-sparkline chart
   const rHistory = [];
-  const maxHistory = 100;
+  const maxHistory = 120;
 
   // Event Listeners
   if (kappaSlider) {
@@ -174,7 +175,7 @@
       if (tmsPulseActive || stimAmp > 0) {
         const isTarget = targetSub === -1 || node.subnetwork === targetSub;
         if (isTarget) {
-          const effAmp = tmsPulseActive ? Math.max(stimAmp, 1.2) : stimAmp;
+          const effAmp = tmsPulseActive ? Math.max(stimAmp, 1.4) : stimAmp;
           stim = effAmp * Math.sin(2.0 * Math.PI * 10.0 * simTime);
         }
       }
@@ -187,7 +188,7 @@
       const totalInput = 2.5 * node.activity + kappa * activityInput + stim + 0.8;
       const sigmoid = 1.0 / (1.0 + Math.exp(-1.3 * (totalInput - 3.0)));
       node.activity += ((-leakAlpha * node.activity + sigmoid) / 1.0) * dt;
-      node.activity = Math.max(0.05, Math.min(node.activity, 1.2));
+      node.activity = Math.max(0.05, Math.min(node.activity, 1.25));
     }
 
     // Compute Kuramoto Order Parameter R(t) = | (1/N) sum exp(i * theta_j) |
@@ -211,35 +212,63 @@
     if (regimeMetricEl) {
       if (rOrder < 0.32) {
         regimeMetricEl.textContent = "Asynchronous (I)";
-        regimeMetricEl.style.color = "#a0aec0";
+        regimeMetricEl.style.color = "#94A3B8";
       } else if (rOrder < 0.72) {
         regimeMetricEl.textContent = "Metastable (II)";
-        regimeMetricEl.style.color = "#ecc94b";
+        regimeMetricEl.style.color = "#F59E0B";
       } else {
         regimeMetricEl.textContent = "Phase-Locked (III)";
-        regimeMetricEl.style.color = "#48bb78";
+        regimeMetricEl.style.color = "#10B981";
       }
     }
+  }
+
+  // Draw Astronomical / Laboratory Observatory Grid
+  function drawChamberGrid() {
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.04)";
+    ctx.lineWidth = 1;
+
+    // Crosshairs
+    ctx.beginPath();
+    ctx.moveTo(cx, 20);
+    ctx.lineTo(cx, height - 20);
+    ctx.moveTo(30, cy);
+    ctx.lineTo(width - 30, cy);
+    ctx.stroke();
+
+    // Hemispheric boundary guides
+    ctx.beginPath();
+    ctx.ellipse(cx - 135, cy, 115, 170, 0, 0, Math.PI * 2);
+    ctx.ellipse(cx + 135, cy, 115, 170, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(196, 154, 69, 0.08)";
+    ctx.stroke();
+
+    // Subtle scale ticks
+    ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+    ctx.font = "9px JetBrains Mono, monospace";
+    ctx.fillText("CORONAL -X", cx - 210, cy - 180);
+    ctx.fillText("CORONAL +X", cx + 150, cy - 180);
+    ctx.fillText("SAGITTAL 0.0", cx - 35, 35);
   }
 
   // Render Loop
   function draw() {
     ctx.clearRect(0, 0, width, height);
+    drawChamberGrid();
 
     // Draw structural connectivity edges
     for (let i = 0; i < NUM_NODES; i++) {
       for (let j = i + 1; j < NUM_NODES; j++) {
         const w = adj[i][j];
-        if (w > 0.25) {
-          // Dynamic phase difference modulation on edge luminescence
+        if (w > 0.22) {
           const phaseDiff = Math.abs(Math.sin(nodes[i].phase - nodes[j].phase));
-          const alpha = Math.min(0.6, (1.0 - phaseDiff * 0.5) * (w * 0.4));
+          const alpha = Math.min(0.55, (1.0 - phaseDiff * 0.5) * (w * 0.45));
 
           ctx.beginPath();
           ctx.moveTo(nodes[i].x, nodes[i].y);
           ctx.lineTo(nodes[j].x, nodes[j].y);
-          ctx.strokeStyle = `rgba(100, 149, 237, ${alpha})`;
-          ctx.lineWidth = w * 1.8;
+          ctx.strokeStyle = `rgba(147, 197, 253, ${alpha})`;
+          ctx.lineWidth = w * 1.6;
           ctx.stroke();
         }
       }
@@ -247,15 +276,15 @@
 
     // Draw nodes
     for (const node of nodes) {
-      const radius = 5 + node.activity * 6;
+      const radius = 5.5 + node.activity * 6.5;
 
       // Glow halo based on activity
-      const grad = ctx.createRadialGradient(node.x, node.y, radius * 0.2, node.x, node.y, radius * 2.2);
+      const grad = ctx.createRadialGradient(node.x, node.y, radius * 0.2, node.x, node.y, radius * 2.4);
       grad.addColorStop(0, node.color);
       grad.addColorStop(1, "rgba(0, 0, 0, 0)");
 
       ctx.beginPath();
-      ctx.arc(node.x, node.y, radius * 2.2, 0, Math.PI * 2);
+      ctx.arc(node.x, node.y, radius * 2.4, 0, Math.PI * 2);
       ctx.fillStyle = grad;
       ctx.fill();
 
@@ -264,46 +293,46 @@
       ctx.arc(node.x, node.y, radius, 0, Math.PI * 2);
       ctx.fillStyle = node.color;
       ctx.fill();
-      ctx.strokeStyle = "#ffffff";
-      ctx.lineWidth = 1.2;
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 1.3;
       ctx.stroke();
 
       // Phase angle vector indicator
-      const px = node.x + Math.cos(node.phase) * (radius + 4);
-      const py = node.y + Math.sin(node.phase) * (radius + 4);
+      const px = node.x + Math.cos(node.phase) * (radius + 5);
+      const py = node.y + Math.sin(node.phase) * (radius + 5);
       ctx.beginPath();
       ctx.moveTo(node.x, node.y);
       ctx.lineTo(px, py);
-      ctx.strokeStyle = "#ffffff";
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 1.6;
       ctx.stroke();
     }
 
     // Draw mini sparkline graph of R(t) in bottom-right corner
-    const sparkW = 160;
-    const sparkH = 45;
-    const sparkX = width - sparkW - 16;
-    const sparkY = height - sparkH - 16;
+    const sparkW = 180;
+    const sparkH = 50;
+    const sparkX = width - sparkW - 18;
+    const sparkY = height - sparkH - 18;
 
-    ctx.fillStyle = "rgba(15, 23, 42, 0.85)";
+    ctx.fillStyle = "rgba(12, 14, 20, 0.9)";
     ctx.fillRect(sparkX, sparkY, sparkW, sparkH);
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+    ctx.strokeStyle = "rgba(196, 154, 69, 0.3)";
     ctx.strokeRect(sparkX, sparkY, sparkW, sparkH);
 
-    ctx.fillStyle = "#a0aec0";
-    ctx.font = "10px sans-serif";
-    ctx.fillText("Kuramoto R(t)", sparkX + 6, sparkY + 12);
+    ctx.fillStyle = "#C49A45";
+    ctx.font = "9px JetBrains Mono, monospace";
+    ctx.fillText("KURAMOTO COHERENCE R(t)", sparkX + 8, sparkY + 13);
 
     if (rHistory.length > 1) {
       ctx.beginPath();
       for (let i = 0; i < rHistory.length; i++) {
         const x = sparkX + (i / maxHistory) * sparkW;
-        const y = sparkY + sparkH - rHistory[i] * (sparkH - 14) - 4;
+        const y = sparkY + sparkH - rHistory[i] * (sparkH - 18) - 4;
         if (i === 0) ctx.moveTo(x, y);
         else ctx.lineTo(x, y);
       }
-      ctx.strokeStyle = "#48bb78";
-      ctx.lineWidth = 1.6;
+      ctx.strokeStyle = "#10B981";
+      ctx.lineWidth = 1.8;
       ctx.stroke();
     }
   }
