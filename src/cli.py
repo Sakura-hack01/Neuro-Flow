@@ -43,7 +43,7 @@ def cmd_exp(args: argparse.Namespace) -> None:
 
 
 def cmd_plot(args: argparse.Namespace) -> None:
-    """Generates 300-DPI high-resolution research figures."""
+    """Generates 300-DPI high-resolution empirical analysis figures."""
     from visualization.plot_figures import generate_all_figures
     generate_all_figures()
 
@@ -125,7 +125,7 @@ def main() -> None:
     exp_parser.add_argument("--quick", action="store_true", help="Run fast test configuration")
 
     # plot
-    subparsers.add_parser("plot", help="Generate 300-DPI high-resolution research figures")
+    subparsers.add_parser("plot", help="Generate 300-DPI high-resolution empirical analysis figures")
 
     # cpp-bench
     subparsers.add_parser("cpp-bench", help="Run real-time BCI edge engine benchmark")

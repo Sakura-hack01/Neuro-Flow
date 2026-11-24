@@ -1,1 +1,1 @@
-"""High-resolution visualization and figure generation suite."""
+"""High-resolution visualization and empirical analysis figure generation suite."""

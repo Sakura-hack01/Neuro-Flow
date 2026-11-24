@@ -35,17 +35,17 @@ neural-flow-connectome/
 │   ├── CMakeLists.txt                 # Modern C++23 build configuration
 │   ├── bci_edge_engine.cpp            # Low-latency sliding-window BCI engine
 │   └── run_bci_benchmark.py           # Benchmark runner and metrics exporter
-├── docs/                              # GitHub Pages static dashboard
-│   ├── index.html                     # Interactive research presentation
-│   ├── styles.css                     # Academic portal styling
+├── docs/                              # Interactive research dashboard & web portal
+│   ├── index.html                     # Research dashboard & simulator
+│   ├── styles.css                     # Editorial academic styling
 │   ├── sim.js                         # 60 FPS HTML5 canvas simulator
-│   └── assets/                        # 300-DPI high-resolution figures
+│   └── assets/                        # High-resolution figures & visual assets
 ├── experiments/
 │   ├── exp1_irregular_forecasting.py  # Continuous vs discrete forecasting benchmark
 │   ├── exp2_bifurcation_phase_diagram.py # 2D Kuramoto bifurcation sweep
 │   ├── exp3_flow_imputation.py        # OT-CFM missing channel reconstruction
 │   └── exp4_topology_ablation.py      # Connectome vs random graph ablation
-├── figures/                           # 300-DPI research figures (PNG and PDF)
+├── figures/                           # High-resolution empirical analysis plots (PNG and PDF)
 ├── notebooks/
 │   └── Neural_Flow_Interactive_Demo.ipynb # Interactive tutorial notebook
 ├── results/                           # JSON and checkpoint outputs
@@ -88,7 +88,7 @@ python -m src.cli test
 # Run all scientific experiments
 python -m src.cli exp
 
-# Generate high-resolution 300-DPI research figures
+# Generate high-resolution 300-DPI empirical figures
 python -m src.cli plot
 
 # Execute BCI edge engine benchmark

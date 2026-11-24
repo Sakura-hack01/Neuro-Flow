@@ -1,6 +1,6 @@
-"""High-resolution 300-DPI research figure generation pipeline.
+"""High-resolution 300-DPI empirical figure generation pipeline.
 
-Produces Figures 1-4 in both PNG and PDF format under figures/ and synchronizes them to docs/assets/ and assets/.
+Produces Figures 1-4 in both PNG and PDF format under figures/ and synchronizes PNGs to docs/assets/.
 """
 
 import json
@@ -15,7 +15,7 @@ from src.models.graph_neural_ode import GraphNeuralODE
 
 
 def set_academic_style() -> None:
-    """Configures matplotlib with academic aesthetic styling."""
+    """Configures matplotlib with professional academic aesthetic styling."""
     plt.rcParams.update({
         "font.family": "sans-serif",
         "font.size": 10,
@@ -308,9 +308,9 @@ def _save_fig(fig: plt.Figure, output_dir: str, base_name: str) -> None:
 
 
 def generate_all_figures(results_dir: str = "results", output_dir: str = "figures") -> None:
-    """Generates all 4 research figures."""
+    """Generates all 4 experimental analysis figures."""
     set_academic_style()
-    print("Generating research figures...")
+    print("Generating experimental analysis figures...")
     plot_figure_1(output_dir=output_dir)
     plot_figure_2(results_dir=results_dir, output_dir=output_dir)
     plot_figure_3(results_dir=results_dir, output_dir=output_dir)
