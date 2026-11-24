@@ -1,11 +1,12 @@
 /* ==============================================================================
-   Harvard Academic Research Portal & Distill Style (Ivy League Aesthetic)
+   Neural-Flow Academic Research Portal & Distill Style
+   Researched & Authored by Saket Dixit
    ============================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  /* Harvard Brand Palette */
+  /* Editorial Academic Palette */
   --crimson-primary: #A51C30;
   --crimson-dark: #7F1424;
   --crimson-light: #C43D51;

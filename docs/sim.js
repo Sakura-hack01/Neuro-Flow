@@ -1,7 +1,7 @@
 /**
  * Real-time Client-side Neural Connectome & Continuous-Time ODE Simulator.
  * Simulates 68 Desikan-Killiany cortical parcels and Kuramoto/Wilson-Cowan dynamics at 60 FPS.
- * Harvard Center for Brain Science Observatory Design.
+ * Research and Simulation Architecture by Saket Dixit.
  */
 
 (function () {
@@ -26,7 +26,7 @@
   const regimeMetricEl = document.getElementById("regimeMetric");
   const latencyMetricEl = document.getElementById("latencyMetric");
 
-  // Subnetworks definition (Harvard Laboratory Palette)
+  // Subnetworks definition (Cortical Functional Palette)
   const SUBNETWORKS = [
     { name: "Default Mode", color: "#3B82F6", start: 0, end: 17 },
     { name: "Somatomotor", color: "#F59E0B", start: 17, end: 34 },

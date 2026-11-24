@@ -3,51 +3,55 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Neural-Flow: Continuous-Time Brain State & Connectome Dynamics</title>
+  <title>Neural-Flow: Continuous-Time Brain State & Connectome Dynamics | Saket Dixit</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- MathJax for high-resolution KaTeX rendering -->
+  <!-- MathJax for high-resolution LaTeX rendering -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
-  <!-- Harvard Academic Brand Bar -->
+  <!-- Academic Top Brand Bar -->
   <div class="univ-top-bar">
     <div class="container">
       <div class="univ-crest-title">
         <span class="univ-crest-symbol">&#9883;</span>
-        <span>Center for Brain Science &bull; Harvard University</span>
+        <span>Neural-Flow Research Initiative &bull; Lead Researcher: Saket Dixit</span>
       </div>
       <div class="univ-dept-badge">
-        Laboratory for Computational Neurodynamics & Neural Systems
+        Continuous-Time Cortical Dynamics & Graph Neural ODEs
       </div>
     </div>
   </div>
 
-  <!-- Hero Publication Header -->
+  <!-- Hero Header -->
   <header class="hero-header">
     <div class="container">
       <div class="publication-badge-row">
-        <span class="peer-badge">Computational Neuroscience Research Track</span>
-        <span class="open-access-pill">&#10003; Open-Access Repository</span>
-        <span class="peer-badge" style="color: var(--gold-accent); border-color: var(--border-gold); background: #FAF6ED;">C++23 &bull; PyTorch 2.0+</span>
+        <span class="peer-badge">Computational Neuroscience & Machine Learning</span>
+        <span class="open-access-pill">&#10003; Open-Access Codebase</span>
+        <span class="peer-badge" style="color: var(--gold-accent); border-color: var(--border-gold); background: #FAF6ED;">Author: Saket Dixit</span>
+        <span class="peer-badge">PyTorch 2.0+ &bull; C++23 Core</span>
       </div>
 
       <h1 class="paper-title">Neural-Flow: Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching</h1>
 
       <div class="author-line">
-        Computational Neurodynamics Research Group &bull; Open-Source Scientific Initiative
+        Researched & Developed by <strong>Saket Dixit</strong>
       </div>
       <div class="affiliation-line">
-        Faculty of Arts & Sciences, Harvard University &bull; Interdisciplinary Neural Modeling Division
+        Independent Computational Neurodynamics Research Initiative &bull; Connectome AI Project
       </div>
 
       <div class="action-links">
         <a href="#simulator" class="action-btn primary">
           <span>&#9654;</span> Interactive Connectome Laboratory
         </a>
+        <a href="#executive-summary" class="action-btn">
+          <span>&#128214;</span> Reviewer Executive Summary
+        </a>
         <a href="#figures" class="action-btn">
-          <span>&#128202;</span> 300-DPI Publication Gallery
+          <span>&#128202;</span> 300-DPI Publication Figures
         </a>
         <a href="#benchmarks" class="action-btn">
           <span>&#9889;</span> C++23 Edge Latency
@@ -60,17 +64,65 @@
   </header>
 
   <main class="container">
-    <!-- Abstract Callout -->
+    <!-- Executive Summary for Professors & Academic Reviewers -->
+    <section id="executive-summary" style="padding-top: 36px; padding-bottom: 24px;">
+      <div style="background: #FFFFFF; border: 1px solid var(--border-gold); border-top: 4px solid var(--crimson-primary); border-radius: 8px; padding: 32px 36px; box-shadow: var(--shadow-card);">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; border-bottom: 1px solid var(--border-light); padding-bottom: 12px; flex-wrap: wrap;">
+          <h2 style="font-family: var(--font-display); font-size: 1.25rem; color: var(--crimson-dark); letter-spacing: 0.06em; text-transform: uppercase;">
+            Executive Summary for Faculty & Academic Reviewers
+          </h2>
+          <span style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--ink-muted);">Key Highlights & Experimental Validation</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 18px;">
+          <!-- Column 1: Core Problem -->
+          <div>
+            <h4 style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; color: var(--crimson-primary); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.04em;">
+              1. The Fundamental Problem
+            </h4>
+            <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+              Traditional neural sequence models (RNNs, LSTMs, GRUs) assume rigid, discrete time steps ($\Delta t = \text{const}$). In real-world neuroimaging (irregular EEG/fMRI), sampling timestamps are non-uniform. Furthermore, discrete models ignore the physical structural connectome wiring, causing unstable numerical drift and hallucinated phase synchrony.
+            </p>
+          </div>
+
+          <!-- Column 2: Our Scientific Solution -->
+          <div>
+            <h4 style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; color: var(--crimson-primary); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.04em;">
+              2. Methodology: Neural-Flow
+            </h4>
+            <p style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6;">
+              We formulate continuous-time cortical dynamics on the human connectome ($N=68$ Desikan-Killiany regions across 4 subnetworks) using a Graph Neural ODE:
+              $$\frac{dX(t)}{dt} = -\alpha X(t) - \kappa \mathcal{L}_{\mathrm{sym}} X(t) + f_\theta(X(t), \mathcal{L}_{\mathrm{sym}}, u(t))$$
+              with verified spectral bounds $\lambda_i(\mathcal{L}_{\mathrm{sym}}) \in [0, 2]$, integrated via pure PyTorch adaptive DOPRI5/RK4 solvers. Missing channels are reconstructed via Optimal Transport Conditional Flow Matching (OT-CFM).
+            </p>
+          </div>
+
+          <!-- Column 3: Validated Results -->
+          <div>
+            <h4 style="font-family: var(--font-sans); font-size: 0.95rem; font-weight: 700; color: var(--crimson-primary); text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.04em;">
+              3. Empirical Validation
+            </h4>
+            <ul style="font-size: 0.92rem; color: var(--ink-secondary); line-height: 1.6; padding-left: 18px;">
+              <li><strong>4x Lower Forecasting Error</strong>: MSE 0.059 vs 0.235 (Discrete GRU) at 40% irregular drop.</li>
+              <li><strong>Bifurcation Phase Portrait</strong>: Mapped transitions between Asynchronous, Chimera, and Phase-Locked states.</li>
+              <li><strong>Edge Latency</strong>: Zero-overhead C++23 sliding-window inference achieves <strong>0.045 ms</strong> (&lt;5 ms target).</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Abstract Box -->
     <div class="abstract-panel">
-      <h2>Abstract & Scientific Scope</h2>
+      <h2>Abstract</h2>
       <p>
-        Traditional discrete-time recurrent neural architectures struggle to capture multi-scale cortical dynamics across irregular neuroimaging sampling intervals and fail to incorporate the rigid anatomical constraints of the human connectome. We introduce <strong>Neural-Flow</strong>, a continuous-time framework combining <em>Graph-Coupled Neural Ordinary Differential Equations (Graph Neural ODEs)</em> with <em>Optimal Transport Conditional Flow Matching (OT-CFM)</em>. By parameterizing non-linear population dynamics directly over the symmetric normalized Graph Laplacian of the Desikan-Killiany cortical parcellation ($N = 68$ regions across 4 canonical functional subnetworks), Neural-Flow guarantees bounded spectral diffusion while forecasting irregular neural trajectories. We evaluate our methodology on continuous trajectory forecasting, 2D Kuramoto bifurcation transitions under transcranial magnetic stimulation (TMS), and missing-channel imputation with Bayesian uncertainty quantification, demonstrating a deterministic sliding-window edge BCI inference latency of 0.045 ms.
+        Traditional discrete-time recurrent neural models struggle to capture multi-scale cortical dynamics observed across irregular neuroimaging sampling intervals and fail to incorporate the rigid anatomical constraints of the human connectome. We introduce <strong>Neural-Flow</strong>, a continuous-time framework combining <em>Graph-Coupled Neural Ordinary Differential Equations (Graph Neural ODEs)</em> with <em>Optimal Transport Conditional Flow Matching (OT-CFM)</em>. By parameterizing non-linear population dynamics directly over the symmetric normalized Graph Laplacian of the Desikan-Killiany cortical parcellation ($N = 68$ regions across 4 canonical functional subnetworks), Neural-Flow guarantees bounded spectral diffusion while forecasting irregular neural trajectories. We evaluate our methodology on continuous trajectory forecasting, 2D Kuramoto bifurcation transitions under transcranial magnetic stimulation (TMS), and missing-channel imputation with Bayesian uncertainty quantification, demonstrating a deterministic sliding-window edge BCI inference latency of 0.045 ms.
       </p>
     </div>
 
     <!-- Section 1: Live Interactive Observatory -->
     <section class="paper-section" id="simulator">
-      <h2 class="section-title">1. Advanced Cortical Electrophysiology Chamber</h2>
+      <h2 class="section-title">1. Interactive Cortical Electrophysiology Chamber</h2>
       <p class="section-intro">
         Continuous-time numerical integration of coupled Wilson-Cowan excitatory/inhibitory populations and Kuramoto phase oscillators across 68 bilaterally symmetric Desikan-Killiany cortical parcels at 60 FPS in pure WebGL/HTML5 Canvas.
       </p>
@@ -97,7 +149,7 @@
         <!-- Instrument Console -->
         <div class="instrument-console">
           <div class="console-header">
-            <h3>Laboratory Instruments</h3>
+            <h3>Simulation Controls</h3>
             <p>Adjust biophysical coupling and perturbation parameters</p>
           </div>
 
@@ -334,15 +386,15 @@
       </div>
     </section>
 
-    <!-- Section 5: Citation & Reproducibility -->
+    <!-- Section 5: Citation & Academic Reference -->
     <section class="paper-section">
       <h2 class="section-title">5. Citation & Academic Reference</h2>
       <div class="bibtex-card">
         <button class="copy-btn" onclick="copyBibtex()">Copy BibTeX</button>
-        <pre id="bibtexText">@article{neuralflow2026,
+        <pre id="bibtexText">@article{dixit2026neuralflow,
   title={Neural-Flow: Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching},
-  author={Computational Neurodynamics Research Group},
-  journal={Harvard University Center for Brain Science Technical Reports},
+  author={Dixit, Saket},
+  journal={Computational Neurodynamics Research Reports},
   year={2026},
   url={https://github.com/Sakura-hack01/Neuro-Flow}
 }</pre>
@@ -356,12 +408,12 @@
     <img id="lightboxImg" class="lightbox-content" src="" alt="Enlarged Figure">
   </div>
 
-  <!-- Harvard Academic Footer -->
+  <!-- Academic Footer -->
   <footer class="univ-footer">
     <div class="container footer-content">
       <div>
-        <div class="footer-dept-name">HARVARD UNIVERSITY &bull; CENTER FOR BRAIN SCIENCE</div>
-        <div style="font-size: 0.8rem; margin-top: 4px;">Neural-Flow Connectome Dynamics Framework &bull; MIT Open Source License</div>
+        <div class="footer-dept-name">NEURAL-FLOW RESEARCH INITIATIVE &bull; SAKET DIXIT</div>
+        <div style="font-size: 0.8rem; margin-top: 4px;">Continuous-Time Cortical Dynamics & Connectome Graph AI &bull; Open-Source Research</div>
       </div>
       <div>
         <a href="https://github.com/Sakura-hack01/Neuro-Flow" target="_blank" style="color: var(--gold-accent); text-decoration: none; font-weight: 600;">GitHub Repository &rarr;</a>

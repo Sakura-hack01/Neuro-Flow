@@ -1,8 +1,11 @@
 # Neural-Flow Connectome
 
-> **Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching**
+> **Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching**  
+> **Author & Lead Researcher**: Saket Dixit  
+> **Repository**: [https://github.com/Sakura-hack01/Neuro-Flow](https://github.com/Sakura-hack01/Neuro-Flow)  
+> **Interactive Laboratory**: [https://sakura-hack01.github.io/Neuro-Flow/](https://sakura-hack01.github.io/Neuro-Flow/)
 
-Neural-Flow is a computational neuroscience and machine learning research framework for continuous-time modeling of cortical brain state trajectories constrained by human structural connectome topology.
+Neural-Flow is a computational neuroscience and machine learning research framework for continuous-time modeling of cortical brain state trajectories constrained by human structural connectome topology, authored by Saket Dixit.
 
 ---
 
