@@ -81,37 +81,33 @@ def integrate_adaptive_dopri5(
     trajectory = [y0]
 
     current_y = y0
-    current_t = t_span[0]
-    dt = torch.tensor(min(0.05, float(t_span[1] - t_span[0])), device=device, dtype=y0.dtype)
+    current_t = float(t_span[0].item() if torch.is_tensor(t_span[0]) else t_span[0])
+    dt = min(0.05, float(t_span[1] - t_span[0]))
 
     for i in range(1, num_eval_points):
-        target_t = t_span[i]
+        target_t = float(t_span[i].item() if torch.is_tensor(t_span[i]) else t_span[i])
 
-        while current_t < target_t - 1e-7:
-            # Clip dt to reach target_t exactly
-            step_dt = torch.min(dt, target_t - current_t)
+        while current_t < target_t - 1e-6:
+            step_dt = min(dt, target_t - current_t)
             if step_dt < min_step_size:
                 step_dt = target_t - current_t
 
-            y_candidate, error, _ = dopri5_step(func, current_t, current_y, step_dt)
+            t_tensor = torch.tensor(current_t, device=device, dtype=y0.dtype)
+            dt_tensor = torch.tensor(step_dt, device=device, dtype=y0.dtype)
+            y_candidate, error, _ = dopri5_step(func, t_tensor, current_y, dt_tensor)
 
             # Error tolerance scale
             scale = atol + rtol * torch.maximum(torch.abs(current_y), torch.abs(y_candidate))
-            norm_error = torch.sqrt(torch.mean((error / scale) ** 2))
+            norm_error = float(torch.sqrt(torch.mean((error / scale) ** 2)).item())
 
             if norm_error <= 1.0 or step_dt <= min_step_size:
-                # Accept step
                 current_y = y_candidate
-                current_t = current_t + step_dt
-
-                # Adapt next step size
-                factor = 0.9 * (1.0 / (norm_error + 1e-8)) ** 0.2
-                factor = torch.clamp(factor, 0.2, 5.0)
-                dt = torch.clamp(step_dt * factor, min_step_size, max_step_size)
+                current_t += step_dt
+                factor = min(5.0, max(0.2, 0.9 * (1.0 / (norm_error + 1e-8)) ** 0.2))
+                dt = min(max_step_size, max(min_step_size, step_dt * factor))
             else:
-                # Reject step and decrease step size
-                factor = torch.clamp(0.9 * (1.0 / (norm_error + 1e-8)) ** 0.25, 0.1, 0.5)
-                dt = torch.clamp(step_dt * factor, min_step_size, max_step_size)
+                factor = min(0.5, max(0.1, 0.9 * (1.0 / (norm_error + 1e-8)) ** 0.25))
+                dt = min(max_step_size, max(min_step_size, step_dt * factor))
 
         trajectory.append(current_y)
 
