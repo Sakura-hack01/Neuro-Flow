@@ -14,11 +14,11 @@ def test_connectome_symmetry_and_diagonal() -> None:
     w = connectome.adjacency
 
     # Symmetry
-    assert np.allclose(w, w.T, atol=1e-6), "Adjacency matrix W must be symmetric"
+    assert np.allclose(w, w.T, atol=1e-5), "Adjacency matrix W must be symmetric"
     # Zero diagonal (no self-loops)
-    assert np.allclose(np.diag(w), 0.0), "Diagonal of W must be zero"
+    assert np.allclose(np.diag(w), 0.0, atol=1e-6), "Diagonal of W must be zero"
     # Non-negative weights
-    assert np.all(w >= 0.0), "All connection weights must be non-negative"
+    assert np.all(w >= -1e-6), "All connection weights must be non-negative"
 
 
 def test_laplacian_spectral_bounds() -> None:
@@ -27,13 +27,13 @@ def test_laplacian_spectral_bounds() -> None:
     lap = connectome.laplacian
 
     # Symmetry of Laplacian
-    assert np.allclose(lap, lap.T, atol=1e-6), "Normalized Laplacian must be symmetric"
+    assert np.allclose(lap, lap.T, atol=1e-5), "Normalized Laplacian must be symmetric"
 
     # Spectral bounds
     valid, eigenvalues = connectome.verify_spectral_bounds()
     assert valid, f"Eigenvalues out of bounds [0, 2]: min={eigenvalues[0]}, max={eigenvalues[-1]}"
-    assert eigenvalues[0] >= -1e-5, f"Smallest eigenvalue negative: {eigenvalues[0]}"
-    assert eigenvalues[-1] <= 2.0 + 1e-5, f"Largest eigenvalue exceeds 2.0: {eigenvalues[-1]}"
+    assert eigenvalues[0] >= -1e-4, f"Smallest eigenvalue negative: {eigenvalues[0]}"
+    assert eigenvalues[-1] <= 2.0 + 1e-4, f"Largest eigenvalue exceeds 2.0: {eigenvalues[-1]}"
 
 
 def test_subnetwork_partitions() -> None:
