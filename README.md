@@ -2,7 +2,7 @@
 
 > **Continuous-Time Brain State & Connectome Dynamics via Graph Neural ODEs and Conditional Flow Matching**  
 
-Neural-Flow is a computational neuroscience and machine learning research framework for continuous-time modeling of cortical brain state trajectories constrained by human structural connectome topology, authored by Saket Dixit.
+Neural-Flow is a computational neuroscience and machine learning research framework for continuous-time modeling of cortical brain state trajectories constrained by human structural connectome topology.
 
 ---
 
