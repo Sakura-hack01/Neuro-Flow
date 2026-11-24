@@ -33,7 +33,14 @@ jobs:
         env:
           PYTHONPATH: .
         run: |
-          pytest tests/ -v -s --tb=short
+          pytest tests/ -v -s --tb=short | tee test_results.log
+
+      - name: Upload Test Results on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.python-version }}
+          path: test_results.log
 
   cpp-build-check:
     runs-on: ubuntu-latest
